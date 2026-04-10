@@ -1,7 +1,9 @@
 import axios from "axios";
 
+const apiBaseUrl = (import.meta.env.VITE_API_URL || "/api").replace(/\/+$/, "");
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "/api",
+  baseURL: apiBaseUrl,
   headers: { "Content-Type": "application/json" },
   timeout: 10000,
 });
@@ -19,11 +21,11 @@ api.interceptors.response.use(
 );
 
 export const taskApi = {
-  getAll:  ()         => api.get("/tasks"),
-  create:  (title)    => api.post("/tasks", { title }),
-  toggle:  (id)       => api.patch(`/tasks/${id}`),
-  update:  (id, data) => api.patch(`/tasks/${id}`, data),
-  remove:  (id)       => api.delete(`/tasks/${id}`),
+  getAll:  ()         => api.get("tasks"),
+  create:  (title)    => api.post("tasks", { title }),
+  toggle:  (id)       => api.patch(`tasks/${id}`),
+  update:  (id, data) => api.patch(`tasks/${id}`, data),
+  remove:  (id)       => api.delete(`tasks/${id}`),
 };
 
 export default api;
